@@ -1,0 +1,349 @@
+---
+name: Thomas
+surname: Fung
+position: Senior Lecturer in Statistics
+address: Department of Mathematics and Statistics, Macquarie University
+phone: +61 2 9850 4769
+www: researchers.mq.edu.au/en/persons/thomas-fung
+email: thomas.fung.dr@gmail.com
+twitter: thomasfungdr
+github: thomas-fung
+headcolor: 414141
+date: "`r format(Sys.time(), '%B %Y')`"
+output: vitae::hyndman
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(RefManageR)
+library(vitae)
+source("functions.R")
+```
+
+# Education
+
+```{r degrees, results='asis'}
+tribble(
+  ~ degree, ~ loc, ~ dates, ~ details,
+  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
+  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
+  detailed_entries(degree, dates, where = loc, why = details)
+```
+
+# Employment
+
+```{r, employment, results = 'asis'}
+tribble(
+  ~Start, ~End, ~Position, ~ uni, 
+  "08/2018", NA, "Senior Lecturer in Statistics", "Department of Mathematics and Statistics, Macquarie University",
+  "01/2018", "08/2018", "Senior Lecturer in Statistics", "Department of Statistics, Macquarie University",
+  "02/2010", "12/2017", 
+  "Lecturer in Statistics", "Department of Statistics, 
+  Macquarie University",
+  "01/2010", "02/2010", "Research Assistant (Supervisor: Professor Neville Weber)", "School of Mathematics and Statistics, University of Sydney",
+  "07/2005", "02/2010", "Tutor", "School of Mathematics and Statistics, University of Sydney") %>% 
+  mutate(End = replace_na(End, "present")) %>%
+  mutate(Years = paste(Start, "--", End, sep = "")) %>%
+  select(Years, Position, uni) %>%
+  detailed_entries(Position, Years, where = uni)
+```
+
+# Professional Service
+
+```{r, service, results = 'asis'}
+tribble(
+  ~Start, ~End, ~Position, ~ uni, 
+  "03/2020", NA, "President", "SSA", 
+  "05/2019", NA, "Head of Discipline in Statistics", "MQ",
+  "03/2019", "03/2020", "Vice-President", "SSA",
+  "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
+  "01/2019", "10/2019", "Statistics Seminar Organiser", "MQ", 
+  "02/2018", "06/2018", "Higher Degree Research (HDR) Director", NA,
+  "03/2016", "03/2018", "Secretary", "SSA",
+  "10/2015", "06/2018", "Master of Research (MRes) Advisor", NA,
+  "03/2015", "03/2016", "Assistant Secretary", "SSA",
+  "02/2014", "08/2014", "Statistics Seminar Organiser", NA,
+  "07/2013", "08/2014", "Undergraduate Studies Coordinator", NA,
+  "08/2010", "10/2010", "Postgraduate and Honour Coordinator", NA
+  ) %>% 
+  mutate(End = replace_na(End, "present"),
+         uni = 
+           replace_na(uni, "Department of Statistics, Macquarie University"),
+         uni = case_when(
+           uni == "SSA" ~ 
+             "Statistical Society of Austrlia, NSW Branch",
+           uni == "MQ" ~ 
+             "Department of Mathematics and Statistics, Macquarie University",
+           TRUE ~ uni
+         )
+           ) %>%
+  mutate(Years = paste(Start, "--", End, sep = "")) %>%
+  select(Years, Position, uni) %>%
+  detailed_entries(Position, Years, where = uni)
+```
+
+# Research Interest
+
+* My research interests include 
+    - (Integer-valued) Time Series Analysis
+    - Flexible Regression
+    - Conway-Maxwell Poisson (CMP) and related distributions
+    - Variance-Gamma and related distributions
+    - Tail dependence
+* My research is motivated by complex data that exhibit deviations from an assumed model, such as dispersion, zero-inflation, skewness and heavy-tailedness. 
+
+# Publications
+
+## Article
+```{r publications, results = 'asis'}
+scholar::get_publications("eworc5YAAAAJ") %>% 
+  filter(!is.na(year), journal != "arXiv preprint arXiv:",
+         journal != "World Statistics Congress of the International Statistical Institute") %>% 
+  mutate(journal = str_replace(journal, "&", "and"), 
+    journal = paste0(author, ". ", journal, ", ", number)) %>% 
+  arrange(-year, author) %>% 
+  detailed_entries(
+    what = title,
+    when = year,
+    where = journal)
+```
+
+## Software development
+```{r rpkgs}
+tribble(
+  ~ pkg, ~ when, ~role, ~details, ~author, 
+  "mpcmp", 2019, "Author", "Mean-parametrized Conway-Maxwell Poisson Regression", "T Fung, A. Alwan, J. Wishart, A. Huang",
+  "survivalMPLdc", 2020, "Author", "Penalised Likelihood for Survival Analysis with Dependent Censoring", 
+  "J. Xu, J. Ma, T. Fung", 
+  "qicpack", 2019, "Author", "QIC package for GEE",
+  "T. Fung",
+  "thesisdownmq", 2018, "Author", 
+  "An updated R Markdown thesis template using the bookdown package for Macquarie University HDR Thesis",
+  "T. Fung, J. Wishart") %>% 
+  arrange(-when, author) %>% 
+  detailed_entries(glue::glue("\\textbf{<pkg>}: <details>", .open = "<", .close = ">"), when, where = author, .protect = FALSE)
+```
+
+# Teaching experience
+
+```{r tutoring}
+tribble(
+  ~ role, ~ unit, ~ details,
+  "Unit Convenor", "Statistical Data Analysis (STAT1371, formerly as STAT171)",
+  "2020 (6 weeks)",
+  "Lecturer", "Introductory Statistics (STAT1170, formerly as STAT170)",
+  "2019 (4 weeks)",
+  "Unit Convener", "Modern Computational Statistical Methods (STAT8178,  formerly as STAT878)",
+  "2019 (6 weeks)",
+  "Unit Convenor", "Applied Statistics (STAT2170/6180, formerly as STAT270/680)",
+  "2017 (6 weeks), 2019 (1 week), 2020 (4 weeks)",
+  "Lecturer", "Statistical Inference (STAT306/806)", 
+  "2015--2017 (6 weeks)",
+  "Unit Convenor", "Generalized Linear Models (STAT8111, formerly as STAT811)",
+  "2015 (9 weeks), 2019--2020 (6 weeks)",
+  "Unit Convenor", "Research Frontiers in Statistics (STAT7900, formerly as STAT700)","2013--2016 and 2017--2019 (2 weeks)",
+  "Unit Convenor", "Stochastic Finance (STAT890)", 
+  "2012--2013 and 2015--2017 (6 weeks)",
+  "Unit Convenor", "Computer Simulation (STAT2178, formerly as STAT278)",
+  "2012--2013 (6 weeks), 2014--2016 (12 weeks), 2017 (6 weeks), 2018 (12 weeks)",
+  "Lecturer", "Statistical Theory (STAT810)", 
+  "2013--2014 (6 weeks)",
+  "Unit Convenor", "Statistical Design (STAT814)",
+  "2010--2013 and 2018 (Additional Lectures for 3 weeks)",
+  "Unit Convenor", "Statistical Modelling in Finance and Insurance (ACST602)", "2011--2013 (6 weeks)",
+  "Lecturer", "Prelude to Bioinformatics (STAT830)", 
+  "2012 (6 weeks)",
+  "Lectuerer", "Computer Applications in Business (MIST800)",
+  "2010--2011 (6 weeks)",
+  "Lecturer", "Gambling, Sport and Medicine (STAT175)",
+  "2010 (4 weeks)",
+  "Convenor", "Graphics, Multivariate Methods and Data Mining",
+  "2010 (12 weeks)"
+  ) %>% 
+  detailed_entries(unit, role, where = details)
+```
+
+
+# Presentation since `r (year_cutoff = 2015)`
+
+```{r presentation}
+tribble(
+  ~ years, ~ days, ~ conf, ~ location, 
+ 2019, "August 18--23", "62nd World Statistical Congress",
+ "Kuala Lumpur, Malaysia",
+ 2019, "June 25--27", "EcoSta", "Taichung, Taiwan",
+ 2018, "October 31", "Statistics Seminar", 
+ "Department of Statistics and Actuarial Science, University of Hong Kong, Hong Kong",
+ 2018, "October 28", "Statistics Seminar", "International Centre for Mathematical Research, Peking University, China",
+ 2018, "October 11", "Statistics Seminar", "Department of Statistics and Actuarial Science, University of Hong Kong, Hong Kong",
+ 2018, "September 13", "Statistics Seminar", "Research School of Finance, Actuarial Studies and Statistics (RSFAS), Australian National University, Australia",
+ 2018, "August 26--30", "ISCB/ASC 2018", "Melbourne, Australia",
+ 2018, "August 26-30", "Statistics Seminar", "Duke-NUS, Singapore",
+ 2018, "July 28--August 2", "Joint Statistical Meetings (JSM)", 
+ "Vancouver, Canada",
+ 2017, "December 16--18", "CMStatistics", "London, UK", 
+ 2017, "September 20", "NIASRA Seminar Series", "University of Wollongong, Australia", 
+ 2017, "July 16--21", "61st World Statistics Congress", 
+ "Marrakech, Morocco", 
+ 2017, "June 15--17", "EcoSta", "Hong Kong, China",
+ 2016, "December 5--9", "Australian Statistical Conference (ASC)", 
+ "Canberra, Australia", 
+ 2016, "July 30--August 4", "JSM", "Chicago, USA",
+ 2015, "July 26--31", "60th World Statistics Congress",
+ "Rio de Janeiro, Brazil",
+ 2015, "March 28", "Statistics Seminar", "School of Mathematics and Statistics, USYD, Australia",
+ 2014, "September 25", "Statistics Seminar", "Department of Mathematics, University of Maryland, USA",
+ 2014, "September 22", "RIT on Financial Mathematics", "Department of Finance, University of Maryland, USA",
+ 2014, "September 9", "The Robust Statistics and Extremes Conference",
+ "Canberra, Australia",
+ 2014, "September 4", "Statistics Seminar", "Department of Statistics, University of Auckland, New Zealand",
+ 2014, "July 7--10", "ASC/IMS Conference", "Sydney, Australia",
+ 2014, "May 23", "Statistics Seminar", ", UNSW, Australia",
+ 2013, "September 30", "57th Annual Meeting of the Australian Mathematical Society", "Sydney, Australia",
+ 2013, "August 25--30", "59th World Statistics Congress", "Hong Kong, China",
+ 2012, "July 9--12", "ASC", "Adelaide, Australia",
+ 2011, "December 28--30", "Statistical Concepts and Methods for the Modern World", "Colombo, Sri Lanka",
+ 2011, "August 21--26", "58th World Statistics Congress", 
+ "Dublin, Ireland",
+ 2010, "December 6--10", "ASC", "Fremantle, Australia",
+ 2010, "March 5", "Statistics Seminar", "School of Mathematics and Statistics, USYD, Australia",
+ 2008, "June 30--July 3", "ASC", "Melbourne, Australia",
+ 2008, "May 16", "Statistics Seminar", "School of Mathematics and Statistics, University of Sydney, Australia",
+ 2007, "April 13--14", "Young Statisticians Conference", "Canberra, Australia"
+) %>% filter(years > year_cutoff) %>% 
+  detailed_entries(what = conf, when = glue::glue("<years>, <days>", .open = "<", .close = ">"), where = location, .protect = FALSE)
+```
+
+# Conference organisation
+
+```{r conf_organisation}
+tribble(
+  ~ years, ~ days, ~ conf, ~location, ~ details,
+  2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data",
+  2018, "June", "EcoSta", "Hong Kong", "Recent advance in (semi)parametric modelling",
+  2017, "December", "AustMS", "Sydney", "Stochastic models and applications"
+) %>% 
+   detailed_entries(what = glue::glue("<conf>, <location>", 
+                                .open = "<", .close = ">"
+                                ), 
+                    when = 
+                      glue::glue("<years>, <days>", .open = "<", .close = ">"),
+                    where = paste0("Organiser of the invited paper session: ", details), .protect = FALSE)
+```
+
+
+# Internal Research Funding
+```{r int_research_fund, results = 'asis'}
+tribble(
+  ~ start, ~end, ~amount, ~details, 
+  "07/2018", "12/2018", "6850", "Macquarie University OSP Travel Grant",
+  "08/2014", "01/2015", "6850", "Macquarie University OSP Travel Grant",
+  "01/2012", "12/2012", "19194", "Macquarie University New Staff Research Grants Scheme"
+) %>% mutate(end = replace_na(end, "present")) %>%
+  mutate(years = paste(start, "--", end, sep = ""),
+         amount = 
+           paste0("$", prettyNum(amount, 
+                                  big.mark = ",",
+                                  scientific = FALSE)),
+         details = paste0(details, ". ", amount)) %>%
+  select(years, details) %>%
+  detailed_entries(details, years)
+```
+
+# Internal Learning and Teaching Funding
+```{r}
+tribble(
+  ~ start, ~end, ~amount, ~scheme, ~ details,
+  "01/2017", "12/2017", "30451", "Macquarie University's Strategic Infrastructure Scheme (MQSIS) for Learning and Teaching",
+  "Cloud-based virtual laboratory for large 
+statistics units, with J. Wishart"
+) %>% mutate(end = replace_na(end, "present")) %>%
+  mutate(years = paste(start, "--", end, sep = ""),
+         amount = 
+           paste0("$", prettyNum(amount, 
+                                  big.mark = ",",
+                                  scientific = FALSE)),
+         scheme = paste0(scheme, ". ", amount)) %>%
+  select(years, scheme, details) %>%
+  detailed_entries(scheme, years, where = details)
+```
+
+
+# Selected academic visits
+```{r visits, results = 'asis'}
+tribble(
+  ~ when, ~ what, ~ where,
+  "11/2018", "NSW Bureau of Crime Statistics and Research, Department of Justice, Sydney, Australia", "4 weeks",
+ "09/2018", "Department of Statistics & Actuarial Science, University of Hong Kong, Hong Kong, China", "9 weeks",
+ "08/2018", "School of Physical & Mathematical Sciences, (NTU), Singapore", "3 weeks",
+ "07/2018", "Quality Systems and Reporting, Climate and Atmospheric Science Branch, Office of Environment and Heritage (NSW), Sydney, Australia", "4 weeks",
+ "11/2014", "School of Mathematics and Statistics, University of Sydney, Australia", "10 weeks",
+ "09/2014", "Department of Finance, University of Maryland, USA", "9 weeks",
+ "08/2014", "Department of Statistics, University of Auckland, New Zealand", "5 weeks"
+) %>% 
+  detailed_entries(what, when, where)
+```
+
+
+# Research Supervision
+
+## Postdoctoral researcher
+
+```{r, post_doc}
+tribble(
+  ~ start, ~ end, ~ name,
+  "01/2020", NA, "Manjula Schou", 
+  "4/2012", "9/2012", "Joanna Wang"
+) %>% mutate(end = replace_na(end, "present")) %>%
+  mutate(years = paste(start, "--", end, sep = "")) %>%
+  select(years, name) %>%
+  brief_entries(name, years)
+```
+
+## Ph.D Thesis
+
+```{r, supervision_data}
+supervision_data <- tribble(
+  ~start, ~end, ~role, ~ name, ~details, ~ type, 
+  "02/2014", "02/2017", "Co-supervision", "Jamil hasan Karami", 
+  "An Extension of Model Selection Curves Framework to Accelerated Failure Time Models", "phd",
+  "06/2019", "06/2019", "", "Yaxin Yu", "Analysis of influences of 2014 Liquor Reforms Act on domestic violence in Sydney (NSW 2000) and NSW, Australia", "master",
+  "06/2019", "06/2019", "", "Jess Chen", "The comparisons of data mining methods for the predictive accuracy of probability of default for LeadingClub's loan data", "master",
+ "06/2019", "06/2019", "", "Katelyn Priester", "Predictors of Acute Pain after Thoracic Surgery", "master",
+ "06/2017", "06/2017", "", "Sze Ho Wang", "Prediction of daily maximum ozone concentrations from ozone precursors and meteorological conditions using Multiple Linear Regression and Generalized Linear Model", "master", 
+"06/2016", "06/2016", "", "Ahmad Alqabandi", 
+"Analysing the Impact of Lockout Law on Alcohol-Related Assaults in NSW Using GLARMA Model", "master",
+"06/2016", "06/2016", "", "Haolun Deng", "Estimation of Skew Models in WinBUGS and Stan", "master",
+"06/2014", "06/2014", "", "Jian Zheng Xie", "Modelling and Predicting Stocks Price with ARMA-GARCH Model", "master",
+"06/2014", "06/2014", "", "Brook Naar", "Fixed Form Variational Bayes Posterior Estimation through Regression -- Review and Discussion", "master", 
+"11/2013", "11/2013", "", "Ling Chen", "A Study on Pricing Motor Compulsory Third party Liability Insurance in China using GLM techniques.", "master",
+"11/2013", "11/2013", "", "Gavin Marsh", "Skew Brownian Motion and Pricing European Options", "master",
+"11/2012", "11/2012", "", "Zhongkai Chan",
+  "Modelling high frequency financial time series by the decomposition model", "master"
+)
+```
+
+```{r, phd}
+supervision_data %>% filter(type == "phd") %>% 
+  mutate(end = replace_na(end, "present")) %>%
+  mutate(years = paste(start, "--", end, sep = ""),
+         name = paste0(role, " of ", name)) %>%
+  select(years, name, details) %>%
+  detailed_entries(name, years, where = details)
+```
+
+
+## Master Project
+
+```{r, master}
+supervision_data %>% filter(type == "master") %>% 
+  mutate(end = replace_na(end, "present")) %>%
+  mutate(years = end) %>%
+  select(years, name, details) %>%
+  detailed_entries(name, years, where = details)
+```
+
+# Refereeing
+
+Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Communication in Statistics - Theory and Methods, Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Multivariate Analysis, Journal of Applied Mathematics, Journal of Statistical Computation and Simulation, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
