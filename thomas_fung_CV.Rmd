@@ -158,7 +158,7 @@ tribble(
   "2010--2011 (6 weeks)",
   "Lecturer", "Gambling, Sport and Medicine (STAT175)",
   "2010 (4 weeks)",
-  "Convenor", "Graphics, Multivariate Methods and Data Mining",
+  "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT302)",
   "2010 (12 weeks)"
   ) %>% 
   detailed_entries(unit, role, where = details)
