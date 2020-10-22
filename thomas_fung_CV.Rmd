@@ -55,7 +55,7 @@ tribble(
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
   "03/2020", NA, "President", "SSA", 
-  "05/2019", NA, "Head of Discipline in Statistics", "MQ",
+  "05/2019", NA, "Teaching Lead in Statistics", "MQ",
   "03/2019", "03/2020", "Vice-President", "SSA",
   "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
   "01/2019", "10/2019", "Statistics Seminar Organiser", "MQ", 
@@ -72,7 +72,7 @@ tribble(
            replace_na(uni, "Department of Statistics, Macquarie University"),
          uni = case_when(
            uni == "SSA" ~ 
-             "Statistical Society of Austrlia, NSW Branch",
+             "Statistical Society of Australia, NSW Branch",
            uni == "MQ" ~ 
              "Department of Mathematics and Statistics, Macquarie University",
            TRUE ~ uni
@@ -113,7 +113,7 @@ scholar::get_publications("eworc5YAAAAJ") %>%
 ```{r rpkgs}
 tribble(
   ~ pkg, ~ when, ~role, ~details, ~author, 
-  "mpcmp", 2019, "Author", "Mean-parametrized Conway-Maxwell Poisson Regression", "T Fung, A. Alwan, J. Wishart, A. Huang",
+  "mpcmp", 2020, "Author", "Mean-parametrized Conway-Maxwell Poisson Regression", "T Fung, A. Alwan, J. Wishart, A. Huang",
   "survivalMPLdc", 2020, "Author", "Penalised Likelihood for Survival Analysis with Dependent Censoring", 
   "J. Xu, J. Ma, T. Fung", 
   "qicpack", 2019, "Author", "QIC package for GEE",
@@ -165,7 +165,17 @@ tribble(
 ```
 
 
-# Presentation since `r (year_cutoff = 2015)`
+# Named Lectures
+
+```{r presentation_named}
+tribble(
+  ~year, ~ named, ~ location,
+  2020, "H.O. Lancaster Lecture", "Statistical Society Australia"
+) %>% 
+  detailed_entries(named, year, where = location)
+```
+
+# Other presentations since `r (year_cutoff = 2015)`
 
 ```{r presentation}
 tribble(
@@ -294,7 +304,7 @@ tribble(
 tribble(
   ~ start, ~ end, ~ name,
   "01/2020", NA, "Manjula Schou", 
-  "4/2012", "9/2012", "Joanna Wang"
+  "04/2012", "9/2012", "Joanna Wang"
 ) %>% mutate(end = replace_na(end, "present")) %>%
   mutate(years = paste(start, "--", end, sep = "")) %>%
   select(years, name) %>%
