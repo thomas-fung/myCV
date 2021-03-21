@@ -55,7 +55,7 @@ tribble(
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
   "03/2020", NA, "President", "SSA", 
-  "05/2019", NA, "Teaching Lead in Statistics", "MQ",
+  "05/2019", NA, "Teaching/Discipline Lead in Statistics", "MQ",
   "03/2019", "03/2020", "Vice-President", "SSA",
   "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
   "01/2019", "10/2019", "Statistics Seminar Organiser", "MQ", 
@@ -100,9 +100,10 @@ tribble(
 scholar::get_publications("eworc5YAAAAJ") %>% 
   filter(!is.na(year), journal != "arXiv preprint arXiv:",
          journal != "World Statistics Congress of the International Statistical Institute") %>% 
-  mutate(journal = str_replace(journal, "&", "and"), 
+  mutate(author = stringr::str_replace(author, "AA BOMBACI BILGIN", "A Bilgin"), 
+    journal = str_replace(journal, "&", "and"), 
     journal = paste0(author, ". ", journal, ", ", number)) %>% 
-  arrange(-year, author) %>% 
+  arrange(desc(year), author) %>% 
   detailed_entries(
     what = title,
     when = year,
@@ -127,41 +128,30 @@ tribble(
 
 # Teaching experience
 
+I have extensive convening and teaching experience ranging from first year to master level, theoretical to applied units. 
+
 ```{r tutoring}
 tribble(
-  ~ role, ~ unit, ~ details,
-  "Unit Convenor", "Statistical Data Analysis (STAT1371, formerly as STAT171)",
-  "2020 (6 weeks)",
+  ~ role, ~ unit,
+  "Unit Convenor", "Statistical Data Analysis (STAT1371, formerly as STAT171)", 
   "Lecturer", "Introductory Statistics (STAT1170, formerly as STAT170)",
-  "2019 (4 weeks)",
   "Unit Convener", "Modern Computational Statistical Methods (STAT8178,  formerly as STAT878)",
-  "2019 (6 weeks)",
   "Unit Convenor", "Applied Statistics (STAT2170/6180, formerly as STAT270/680)",
-  "2017 (6 weeks), 2019 (1 week), 2020 (4 weeks)",
   "Lecturer", "Statistical Inference (STAT306/806)", 
-  "2015--2017 (6 weeks)",
   "Unit Convenor", "Generalized Linear Models (STAT8111, formerly as STAT811)",
-  "2015 (9 weeks), 2019--2020 (6 weeks)",
-  "Unit Convenor", "Research Frontiers in Statistics (STAT7900, formerly as STAT700)","2013--2016 and 2017--2019 (2 weeks)",
-  "Unit Convenor", "Stochastic Finance (STAT890)", 
-  "2012--2013 and 2015--2017 (6 weeks)",
+  "Unit Convenor", "Research Frontiers in Statistics (STAT7900, formerly as STAT700)", 
+  "Unit Convenor", "Stochastic Finance (STAT890, rested)", 
   "Unit Convenor", "Computer Simulation (STAT2178, formerly as STAT278)",
-  "2012--2013 (6 weeks), 2014--2016 (12 weeks), 2017 (6 weeks), 2018 (12 weeks)",
   "Lecturer", "Statistical Theory (STAT810)", 
-  "2013--2014 (6 weeks)",
-  "Unit Convenor", "Statistical Design (STAT814)",
-  "2010--2013 and 2018 (Additional Lectures for 3 weeks)",
-  "Unit Convenor", "Statistical Modelling in Finance and Insurance (ACST602)", "2011--2013 (6 weeks)",
-  "Lecturer", "Prelude to Bioinformatics (STAT830)", 
-  "2012 (6 weeks)",
+  "Unit Convenor", "Statistical Design (STAT6114, formerly as STAT814)",
+  "Unit Convenor", "Statistical Modelling in Finance and Insurance", 
+  "Lecturer", "Prelude to Bioinformatics (STAT8830, formerly as STAT830)", 
   "Lectuerer", "Computer Applications in Business (MIST800)",
-  "2010--2011 (6 weeks)",
   "Lecturer", "Gambling, Sport and Medicine (STAT175)",
-  "2010 (4 weeks)",
-  "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT302)",
-  "2010 (12 weeks)"
+  "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT3102, formally STAT302)"
   ) %>% 
-  detailed_entries(unit, role, where = details)
+  arrange(desc(role)) %>% 
+  detailed_entries(unit, role)
 ```
 
 
@@ -279,6 +269,12 @@ statistics units, with J. Wishart"
   detailed_entries(scheme, years, where = details)
 ```
 
+# External Consulting
+```{r consulting, results='asis'}
+tribble(~when, ~what, ~ where, 
+        "12/2020", "Analysing Alcohol related Crime Statistics at Buronga & Gol Gol, NSW", "Adams Hospitality") %>% 
+   detailed_entries(where, when, where = what)
+```
 
 # Selected academic visits
 ```{r visits, results = 'asis'}
@@ -303,7 +299,7 @@ tribble(
 ```{r, post_doc}
 tribble(
   ~ start, ~ end, ~ name,
-  "01/2020", NA, "Manjula Schou", 
+  "01/2020", "12/2020", "Manjula Schou", 
   "04/2012", "9/2012", "Joanna Wang"
 ) %>% mutate(end = replace_na(end, "present")) %>%
   mutate(years = paste(start, "--", end, sep = "")) %>%
@@ -356,4 +352,4 @@ supervision_data %>% filter(type == "master") %>%
 
 # Refereeing
 
-Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Communication in Statistics - Theory and Methods, Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Multivariate Analysis, Journal of Applied Mathematics, Journal of Statistical Computation and Simulation, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
+Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Communication in Statistics - Theory and Methods, Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Computational and Graphical Statistics, Journal of Multivariate Analysis, Journal of Applied Mathematics, Journal of Statistical Computation and Simulation, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
