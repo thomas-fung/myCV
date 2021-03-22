@@ -1,5 +1,5 @@
 ---
-name: Thomas
+name: Ho Ting (Thomas)
 surname: Fung
 position: Senior Lecturer in Statistics
 address: Department of Mathematics and Statistics, Macquarie University
@@ -11,6 +11,10 @@ github: thomas-fung
 headcolor: 414141
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
+params:
+  full_cv: TRUE
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -19,16 +23,6 @@ library(tidyverse)
 library(RefManageR)
 library(vitae)
 source("functions.R")
-```
-
-# Education
-
-```{r degrees, results='asis'}
-tribble(
-  ~ degree, ~ loc, ~ dates, ~ details,
-  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
-  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
-  detailed_entries(degree, dates, where = loc, why = details)
 ```
 
 # Employment
@@ -47,6 +41,16 @@ tribble(
   mutate(Years = paste(Start, "--", End, sep = "")) %>%
   select(Years, Position, uni) %>%
   detailed_entries(Position, Years, where = uni)
+```
+
+# Education
+
+```{r degrees, results='asis'}
+tribble(
+  ~ degree, ~ loc, ~ dates, ~ details,
+  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
+  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
+  detailed_entries(degree, dates, where = loc, why = details)
 ```
 
 # Professional Service
@@ -83,27 +87,56 @@ tribble(
   detailed_entries(Position, Years, where = uni)
 ```
 
-# Research Interest
+```{=latex}
+\newif\iffull
+\full`r stringr::str_to_lower(paste0(params$full_cv))`
+\iffull
+\section{Research Interest}
+\begin{itemize} 
+\item My research interests include 
+\begin{itemize}
+\item (Integer-valued) Time Series Analysis
+\item Flexible Regression
+\item Conway-Maxwell Poisson (CMP) and related distributions
+\item Variance-Gamma and related distributions
+\item Tail dependence
+\end{itemize}
+\item  My research is motivated by complex data that exhibit deviations from an assumed model, such as dispersion, zero-inflation, skewness and heavy-tailedness. 
+\end{itemize}
+\fi
+```
 
-* My research interests include 
-    - (Integer-valued) Time Series Analysis
-    - Flexible Regression
-    - Conway-Maxwell Poisson (CMP) and related distributions
-    - Variance-Gamma and related distributions
-    - Tail dependence
-* My research is motivated by complex data that exhibit deviations from an assumed model, such as dispersion, zero-inflation, skewness and heavy-tailedness. 
+
+
 
 # Publications
 
-## Article
-```{r publications, results = 'asis'}
-scholar::get_publications("eworc5YAAAAJ") %>% 
+## `r ifelse(!params$full_cv, paste("Selected"), paste(""))` Journal Publications
+
+I have 17 publications in international journals. `r ifelse(!params$full_cv, paste("Selected journal publications are listed below. "), paste(""))`
+
+
+```{r publications_info, echo=FALSE}
+pub <- scholar::get_publications("eworc5YAAAAJ") %>% 
   filter(!is.na(year), journal != "arXiv preprint arXiv:",
          journal != "World Statistics Congress of the International Statistical Institute") %>% 
   mutate(author = stringr::str_replace(author, "AA BOMBACI BILGIN", "A Bilgin"), 
     journal = str_replace(journal, "&", "and"), 
     journal = paste0(author, ". ", journal, ", ", number)) %>% 
-  arrange(desc(year), author) %>% 
+  arrange(desc(year), author)
+```
+
+```{r publications_output_short, results = "axis", include=!params$full_cv}
+pub %>% 
+  slice_head(n = 5) %>% 
+  detailed_entries(
+    what = title,
+    when = year,
+    where = journal)
+```
+
+```{r publications_output_full, results = "axis", include=params$full_cv}
+pub %>% 
   detailed_entries(
     what = title,
     when = year,
@@ -126,11 +159,15 @@ tribble(
   detailed_entries(glue::glue("\\textbf{<pkg>}: <details>", .open = "<", .close = ">"), when, where = author, .protect = FALSE)
 ```
 
-# Teaching experience
+```{=latex}
+\iffull
+\section{Teaching experience}
 
 I have extensive convening and teaching experience ranging from first year to master level, theoretical to applied units. 
+\fi
+```
 
-```{r tutoring}
+```{r tutoring, include= params$full_cv}
 tribble(
   ~ role, ~ unit,
   "Unit Convenor", "Statistical Data Analysis (STAT1371, formerly as STAT171)", 
@@ -154,10 +191,13 @@ tribble(
   detailed_entries(unit, role)
 ```
 
+```{=latex}
+\iffull
+\section{Named Lectures}
+\fi
+```
 
-# Named Lectures
-
-```{r presentation_named}
+```{r presentation_named, include= params$full_cv}
 tribble(
   ~year, ~ named, ~ location,
   2020, "H.O. Lancaster Lecture", "Statistical Society Australia"
@@ -165,9 +205,13 @@ tribble(
   detailed_entries(named, year, where = location)
 ```
 
-# Other presentations since `r (year_cutoff = 2015)`
+```{=latex}
+\iffull
+\section{Other presentations since `r (year_cutoff = 2015)`}
+\fi
+```
 
-```{r presentation}
+```{r presentationm, include= params$full_cv}
 tribble(
   ~ years, ~ days, ~ conf, ~ location, 
  2019, "August 18--23", "62nd World Statistical Congress",
@@ -215,9 +259,13 @@ tribble(
   detailed_entries(what = conf, when = glue::glue("<years>, <days>", .open = "<", .close = ">"), where = location, .protect = FALSE)
 ```
 
-# Conference organisation
+```{=latex}
+\iffull
+\section{Conference organisation}
+\fi
+```
 
-```{r conf_organisation}
+```{r conf_organisation, include= params$full_cv}
 tribble(
   ~ years, ~ days, ~ conf, ~location, ~ details,
   2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data",
@@ -232,9 +280,13 @@ tribble(
                     where = paste0("Organiser of the invited paper session: ", details), .protect = FALSE)
 ```
 
+```{=latex}
+\iffull
+\section{Internal Research Funding}
+\fi
+```
 
-# Internal Research Funding
-```{r int_research_fund, results = 'asis'}
+```{r int_research_fund, results = 'asis', include= params$full_cv}
 tribble(
   ~ start, ~end, ~amount, ~details, 
   "07/2018", "12/2018", "6850", "Macquarie University OSP Travel Grant",
@@ -251,8 +303,12 @@ tribble(
   detailed_entries(details, years)
 ```
 
-# Internal Learning and Teaching Funding
-```{r}
+```{=latex}
+\iffull
+\section{Internal Learning and Teaching Funding}
+\fi
+```
+```{r, results = "asis", include= params$full_cv}
 tribble(
   ~ start, ~end, ~amount, ~scheme, ~ details,
   "01/2017", "12/2017", "30451", "Macquarie University's Strategic Infrastructure Scheme (MQSIS) for Learning and Teaching",
@@ -276,8 +332,24 @@ tribble(~when, ~what, ~ where,
    detailed_entries(where, when, where = what)
 ```
 
-# Selected academic visits
-```{r visits, results = 'asis'}
+```{=latex}
+\ifthenelse{\NOT\boolean{full}}{
+\section{Technical Skills}
+General skills in statistics, mathematics and computing. 
+\begin{itemize} 
+\item Languages: Cantonese (native), English (fluent), Mandarin (intermediate)
+\item Mathematical/statistical software: R, Matlab, Minitab,  SPSS, IBM SPSS Modeler and Mathematica,
+\item Computing: Mac, WINDOWS, Linux, Microsoft Office (Word, Excel, Powerpoint, Access/SQL), \LaTeX.
+\end{itemize}}{}
+```
+
+```{=latex}
+\iffull
+\section{Selected academic visits}
+\fi
+```
+
+```{r visits, results = 'asis', include= params$full_cv}
 tribble(
   ~ when, ~ what, ~ where,
   "11/2018", "NSW Bureau of Crime Statistics and Research, Department of Justice, Sydney, Australia", "4 weeks",
@@ -292,11 +364,14 @@ tribble(
 ```
 
 
-# Research Supervision
+```{=latex} 
+\iffull
+\section{Research Supervision}
+\subsection{Postdoctoral researcher}
+\fi
+```
 
-## Postdoctoral researcher
-
-```{r, post_doc}
+```{r post_doc, results = "asis", include= params$full_cv}
 tribble(
   ~ start, ~ end, ~ name,
   "01/2020", "12/2020", "Manjula Schou", 
@@ -307,9 +382,14 @@ tribble(
   brief_entries(name, years)
 ```
 
-## Ph.D Thesis
 
-```{r, supervision_data}
+```{=latex}
+\iffull
+\subsection{Ph.D Thesis}
+\fi
+```
+
+```{r supervision_data}
 supervision_data <- tribble(
   ~start, ~end, ~role, ~ name, ~details, ~ type, 
   "02/2014", "02/2017", "Co-supervision", "Jamil hasan Karami", 
@@ -330,7 +410,7 @@ supervision_data <- tribble(
 )
 ```
 
-```{r, phd}
+```{r phd, results="asis", include= params$full_cv}
 supervision_data %>% filter(type == "phd") %>% 
   mutate(end = replace_na(end, "present")) %>%
   mutate(years = paste(start, "--", end, sep = ""),
@@ -339,10 +419,13 @@ supervision_data %>% filter(type == "phd") %>%
   detailed_entries(name, years, where = details)
 ```
 
+```{=latex}
+\iffull
+\subsection{Master Project}
+\fi
+```
 
-## Master Project
-
-```{r, master}
+```{r master, results="asis", include=params$full_cv}
 supervision_data %>% filter(type == "master") %>% 
   mutate(end = replace_na(end, "present")) %>%
   mutate(years = end) %>%
@@ -350,6 +433,13 @@ supervision_data %>% filter(type == "master") %>%
   detailed_entries(name, years, where = details)
 ```
 
-# Refereeing
+```{=latex}
+\iffull
+\section{Refereeing}
 
 Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Communication in Statistics - Theory and Methods, Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Computational and Graphical Statistics, Journal of Multivariate Analysis, Journal of Applied Mathematics, Journal of Statistical Computation and Simulation, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
+\fi
+```
+
+
+
