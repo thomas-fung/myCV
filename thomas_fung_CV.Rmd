@@ -12,7 +12,7 @@ headcolor: 414141
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 params:
-  full_cv: FALSE
+  full_cv: TRUE
   presentation_cutoff: 2015
 editor_options: 
   chunk_output_type: console
@@ -62,6 +62,7 @@ tribble(
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
   "03/2020", NA, "President", "SSA", 
+  "12/2019", NA, "Board of Directors Ordinary Members", "The Asian Regional Section of The International Association for Statistical Computing",
   "05/2019", NA, "Teaching/Discipline Lead in Statistics", "MQ",
   "03/2019", "03/2020", "Vice-President", "SSA",
   "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
@@ -103,10 +104,6 @@ tribble(
 
 # Publications
 
-## `r ifelse(!params$full_cv, paste("Selected"), paste(""))` Journal Publications
-
-I have 17 publications in international journals. `r ifelse(!params$full_cv, paste("Selected journal publications are listed below. "), paste(""))`
-
 ```{r publications_info}
 pub <- scholar::get_publications("eworc5YAAAAJ") %>% 
   filter(!is.na(year), journal != "arXiv preprint arXiv:",
@@ -116,6 +113,11 @@ pub <- scholar::get_publications("eworc5YAAAAJ") %>%
     journal = paste0(author, ". ", journal, ", ", number)) %>% 
   arrange(desc(year), author)
 ```
+
+
+## `r ifelse(!params$full_cv, paste("Selected"), paste(""))` Journal Publications
+
+I have `r NROW(pub)` publications in international journals. `r ifelse(!params$full_cv, paste("Selected journal publications are listed below. "), paste(""))`
 
 ```{r publications_output_short, results = "asis", include=!params$full_cv}
 pub %>% 
@@ -244,17 +246,18 @@ tribble(
 ```{r conf_organisation, include= params$full_cv, results = "asis"}
 glue("# Conference organisation")
 tribble(
-  ~ years, ~ days, ~ conf, ~location, ~ details,
-  2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data",
-  2018, "June", "EcoSta", "Hong Kong", "Recent advance in (semi)parametric modelling",
-  2017, "December", "AustMS", "Sydney", "Stochastic models and applications"
+  ~ years, ~ days, ~ conf, ~location, ~ details, ~committee, 
+  2022, "Februry", "IASC-ARS 2022", "Kyoto", "Scientific Program Committee", TRUE, 
+  2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data", FALSE, 
+  2018, "June", "EcoSta", "Hong Kong", "Recent advance in (semi)parametric modelling", FALSE, 
+  2017, "December", "AustMS", "Sydney", "Stochastic models and applications", FALSE
 ) %>% 
    detailed_entries(what = glue::glue("<conf>, <location>", 
                                 .open = "<", .close = ">"
                                 ), 
                     when = 
                       glue::glue("<years>, <days>", .open = "<", .close = ">"),
-                    where = paste0("Organiser of the invited paper session: ", details), .protect = FALSE)
+                    where = ifelse(!committee, paste0("Organiser of the invited paper session: ", details), details), .protect = FALSE)
 ```
 
 ```{r int_research_fund, results = 'asis', include= params$full_cv}
@@ -332,8 +335,8 @@ tribble(
 
 
 ```{asis, echo=params$full_cv} 
-# Research Supervision}
-## Postdoctoral researcher}
+# Research Supervision
+## Postdoctoral researcher
 ```
 
 ```{r post_doc, results = "asis", include = params$full_cv}
