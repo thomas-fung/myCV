@@ -2,10 +2,10 @@
 name: Ho Ting (Thomas)
 surname: Fung
 position: Senior Lecturer in Statistics
-address: Department of Mathematics and Statistics, Macquarie University
+address: School of Mathematical and Physical Sciences, Macquarie University
 phone: +61 2 9850 4769
 www: researchers.mq.edu.au/en/persons/thomas-fung
-email: thomas.fung.dr@gmail.com
+email: thomas.fung@mq.edu.au
 twitter: thomasfungdr
 github: thomas-fung
 headcolor: 414141
@@ -13,7 +13,7 @@ date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 params:
   full_cv: TRUE
-  presentation_cutoff: 2015
+  presentation_cutoff: 2018
 editor_options: 
   chunk_output_type: console
 ---
@@ -33,7 +33,8 @@ library(vitae)
 ```{r, employment, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
-  "08/2018", NA, "Senior Lecturer in Statistics", "Department of Mathematics and Statistics, Macquarie University",
+  "01/2022", NA, "Seniro Lecturer in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
+  "08/2018", "12/2021", "Senior Lecturer in Statistics", "Department of Mathematics and Statistics, Macquarie University",
   "01/2018", "08/2018", "Senior Lecturer in Statistics", "Department of Statistics, Macquarie University",
   "02/2010", "12/2017", 
   "Lecturer in Statistics", "Department of Statistics, 
@@ -46,42 +47,38 @@ tribble(
   detailed_entries(Position, Years, where = uni)
 ```
 
-# Education
-
-```{r degrees, results='asis'}
-tribble(
-  ~ degree, ~ loc, ~ dates, ~ details,
-  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
-  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
-  detailed_entries(degree, dates, where = loc, why = details)
-```
 
 # Professional Service
 
 ```{r, service, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
-  "03/2020", NA, "President", "SSA", 
-  "12/2019", NA, "Board of Directors Ordinary Members", "The Asian Regional Section of The International Association for Statistical Computing",
-  "05/2019", NA, "Teaching/Discipline Lead in Statistics", "MQ",
+  "11/2022", NA, "Deputy Course Director for BSc", NA, 
+  "03/2022", NA, "Vice-President", "SSA", 
+  "01/2022", NA, "Teaching Lead in Statistics", NA, 
+  "03/2020", "03/2022", "President", "SSA", 
+  "12/2019", NA, "Board of Directors Ordinary Members", "The Asian Regional Section of The International Association for Statistical Computing (IASC-ARS)",
+  "05/2019", "12/2021", "Teaching Lead in Statistics", "MQ2",
   "03/2019", "03/2020", "Vice-President", "SSA",
   "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
-  "01/2019", "10/2019", "Statistics Seminar Organiser", "MQ", 
-  "02/2018", "06/2018", "Higher Degree Research (HDR) Director", NA,
+  "01/2019", "10/2019", "Statistics Seminar Organiser", "MQ1", 
+  "02/2018", "06/2018", "Higher Degree Research (HDR) Director", "MQ1",
   "03/2016", "03/2018", "Secretary", "SSA",
-  "10/2015", "06/2018", "Master of Research (MRes) Advisor", NA,
+  "10/2015", "06/2018", "Master of Research (MRes) Advisor", "MQ1",
   "03/2015", "03/2016", "Assistant Secretary", "SSA",
-  "02/2014", "08/2014", "Statistics Seminar Organiser", NA,
-  "07/2013", "08/2014", "Undergraduate Studies Coordinator", NA,
-  "08/2010", "10/2010", "Postgraduate and Honour Coordinator", NA
+  "02/2014", "08/2014", "Statistics Seminar Organiser", "MQ1",
+  "07/2013", "08/2014", "Undergraduate Studies Coordinator", "MQ1",
+  "08/2010", "10/2010", "Postgraduate and Honour Coordinator", "MQ1"
   ) %>% 
   mutate(End = replace_na(End, "present"),
          uni = 
-           replace_na(uni, "Department of Statistics, Macquarie University"),
+           replace_na(uni, "School of Mathematical and Physical Sciences, Macquarie University"),
          uni = case_when(
            uni == "SSA" ~ 
              "Statistical Society of Australia, NSW Branch",
-           uni == "MQ" ~ 
+           uni == "MQ1" ~ 
+             "Department of Statistics, Macquarie University",
+           uni == "MQ2" ~ 
              "Department of Mathematics and Statistics, Macquarie University",
            TRUE ~ uni
          )
@@ -107,10 +104,14 @@ tribble(
 ```{r publications_info}
 pub <- scholar::get_publications("eworc5YAAAAJ") %>% 
   filter(!is.na(year), journal != "arXiv preprint arXiv:",
-         journal != "World Statistics Congress of the International Statistical Institute") %>% 
+         journal != "World Statistics Congress of the International Statistical Institute", !stringr::str_detect(title, "Package")) %>% 
+  add_row(title = "Takeaway alcohol sales and violent crime: the implications of extended trading hours
+", author = "JJJ Wang, T Fung, S Pynton", 
+journal = "Crime and Justice Bulletin", number = "No. 247",
+cites = 2, year = 2022, cid = NA, pubid = NA) %>% 
   mutate(author = stringr::str_replace(author, "AA BOMBACI BILGIN", "A Bilgin"), 
     journal = str_replace(journal, "&", "and"), 
-    journal = paste0(author, ". ", journal, ", ", number)) %>% 
+    journal = glue::glue("{author}. {journal}, {number}")) %>% 
   arrange(desc(year), author)
 ```
 
@@ -133,13 +134,16 @@ pub %>%
   detailed_entries(
     what = title,
     when = year,
-    where = journal)
+    where = journal,
+    with = glue::glue("No. of citation: {cites}")
+    ) 
 ```
 
 ## Software development
 ```{r rpkgs}
 tribble(
   ~ pkg, ~ when, ~role, ~details, ~author, 
+  "quarto-mq-revealjs-theme", 2022, "Author", "Macquarie University Quarto reveal.js Presentation Template", "T Fung, S Connor", 
   "mpcmp", 2020, "Author", "Mean-parametrized Conway-Maxwell Poisson Regression", "T Fung, A. Alwan, J. Wishart, A. Huang",
   "survivalMPLdc", 2020, "Author", "Penalised Likelihood for Survival Analysis with Dependent Censoring", 
   "J. Xu, J. Ma, T. Fung", 
@@ -161,6 +165,7 @@ I have extensive convening and teaching experience ranging from first year to ma
 ```{r tutoring, include= params$full_cv}
 tribble(
   ~ role, ~ unit,
+  "Unit Convenor", "Coding and Communication in Statistics (STAT1378)",
   "Unit Convenor", "Statistical Data Analysis (STAT1371, formerly as STAT171)", 
   "Lecturer", "Introductory Statistics (STAT1170, formerly as STAT170)",
   "Unit Convener", "Modern Computational Statistical Methods (STAT8178,  formerly as STAT878)",
@@ -172,11 +177,11 @@ tribble(
   "Unit Convenor", "Computer Simulation (STAT2178, formerly as STAT278)",
   "Lecturer", "Statistical Theory (STAT810)", 
   "Unit Convenor", "Statistical Design (STAT6114, formerly as STAT814)",
-  "Unit Convenor", "Statistical Modelling in Finance and Insurance", 
+  "Unit Convenor", "Statistical Modelling in Finance and Insurance (ACST602)", 
   "Lecturer", "Prelude to Bioinformatics (STAT8830, formerly as STAT830)", 
   "Lectuerer", "Computer Applications in Business (MIST800)",
   "Lecturer", "Gambling, Sport and Medicine (STAT175)",
-  "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT3102, formally STAT302)"
+  "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT3102, formerly as STAT302)"
   ) %>% 
   arrange(desc(role)) %>% 
   detailed_entries(unit, role)
@@ -198,7 +203,10 @@ tribble(
 glue::glue("# Other presentations since  {params$presentation_cutoff}")
 tribble(
   ~ years, ~ days, ~ conf, ~ location, 
- 2019, "August 18--23", "62nd World Statistical Congress",
+ 2022, "December 12-13", "IASC-ARS Interim Conference 2022", "Online Conference",
+ 2022, "Februry 21-24", "IASC-ARS 2022", "Online Conference",
+  2021, "July 5--9", "ANZSC 2021", "Online Conference",
+  2019, "August 18--23", "62nd World Statistical Congress",
  "Kuala Lumpur, Malaysia",
  2019, "June 25--27", "EcoSta", "Taichung, Taiwan",
  2018, "October 31", "Statistics Seminar", 
@@ -239,7 +247,7 @@ tribble(
  2008, "June 30--July 3", "ASC", "Melbourne, Australia",
  2008, "May 16", "Statistics Seminar", "School of Mathematics and Statistics, University of Sydney, Australia",
  2007, "April 13--14", "Young Statisticians Conference", "Canberra, Australia"
-) %>% filter(years > params$presentation_cutoff) %>% 
+) %>% filter(years >= params$presentation_cutoff) %>% 
   detailed_entries(what = conf, when = glue::glue("<years>, <days>", .open = "<", .close = ">"), where = location, .protect = FALSE)
 ```
 
@@ -247,6 +255,8 @@ tribble(
 glue("# Conference organisation")
 tribble(
   ~ years, ~ days, ~ conf, ~location, ~ details, ~committee, 
+  2023, "December", "Australian Statistical Conference", "Sydney", "Secretary of the Local Organising Committee", TRUE, 
+  2023, "December", "IASC-ARS Conference", "Sydney",  "Chair of the Local Organising Committee and a member of the Scientific Program Committee", TRUE, 
   2022, "Februry", "IASC-ARS 2022", "Kyoto", "Scientific Program Committee", TRUE, 
   2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data", FALSE, 
   2018, "June", "EcoSta", "Hong Kong", "Recent advance in (semi)parametric modelling", FALSE, 
@@ -285,6 +295,7 @@ tribble(
 ```{r, results = "asis", include = params$full_cv}
 tribble(
   ~ start, ~end, ~amount, ~scheme, ~ details,
+  "09/2022", "12/2022", "5000", "FSE Teaching Development Grant", "DataFest@Macquarie, with I. Jiang",
   "01/2017", "12/2017", "30451", "Macquarie University's Strategic Infrastructure Scheme (MQSIS) for Learning and Teaching",
   "Cloud-based virtual laboratory for large 
 statistics units, with J. Wishart"
@@ -358,6 +369,10 @@ tribble(
 ```{r supervision_data}
 supervision_data <- tribble(
   ~start, ~end, ~role, ~ name, ~details, ~ type, 
+  "01/2022", "02/2023", "Co-supervision", "Christina Feng", 
+  "Climate and Assault Hospitalisation", "mres",
+  "02/2021", "03/2022", "Co-supervision", "Vanessa Neo", 
+  "Inconsistent coral bleaching risk indicators between temperature data sources", "mres",
   "02/2014", "02/2017", "Co-supervision", "Jamil hasan Karami", 
   "An Extension of Model Selection Curves Framework to Accelerated Failure Time Models", "phd",
   "06/2019", "06/2019", "", "Yaxin Yu", "Analysis of influences of 2014 Liquor Reforms Act on domestic violence in Sydney (NSW 2000) and NSW, Australia", "master",
@@ -386,7 +401,20 @@ supervision_data %>% filter(type == "phd") %>%
 ```
 
 ```{asis, echo=params$full_cv}
-## Master Project
+## MRes Project
+```
+```{r mres, results="asis", include = params$full_cv}
+supervision_data %>% filter(type == "mres") %>% 
+  mutate(end = replace_na(end, "present")) %>%
+  mutate(years = paste(start, "--", end, sep = ""),
+         name = paste0(role, " of ", name)) %>%
+  select(years, name, details) %>%
+  detailed_entries(name, years, where = details)
+```
+
+
+```{asis, echo=params$full_cv}
+## Master Coursework Research Project
 ```
 
 ```{r master, results="asis", include = params$full_cv}
@@ -395,6 +423,16 @@ supervision_data %>% filter(type == "master") %>%
   mutate(years = end) %>%
   select(years, name, details) %>%
   detailed_entries(name, years, where = details)
+```
+
+# Education
+
+```{r degrees, results='asis'}
+tribble(
+  ~ degree, ~ loc, ~ dates, ~ details,
+  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
+  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
+  detailed_entries(degree, dates, where = loc, why = details)
 ```
 
 ```{asis, echo = params$full_cv, include = params$full_cv}
