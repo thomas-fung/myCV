@@ -1,5 +1,5 @@
 ---
-name: Ho Ting (Thomas)
+name: Thomas
 surname: Fung
 position: Senior Lecturer in Statistics
 address: School of Mathematical and Physical Sciences, Macquarie University
@@ -12,7 +12,7 @@ headcolor: 414141
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 params:
-  full_cv: TRUE
+  full_cv: FALSE
   presentation_cutoff: 2018
 editor_options: 
   chunk_output_type: console
@@ -308,6 +308,15 @@ statistics units, with J. Wishart"
          scheme = paste0(scheme, ". ", amount)) %>%
   select(years, scheme, details) %>%
   detailed_entries(scheme, years, where = details)
+```
+# Prizes and Honours
+```{r honours}
+tribble(
+  ~ award, ~ when,  
+  "60 Australian statisticians, showcasing the breadth of the Australian statistical community to celebrate the 60th anniversary of the Statistical Society of Australia", 2023,
+  "Statistical Society of Australia President’s Award for Leadership in Statistics", 2022) %>% 
+  arrange(-when) %>% 
+  detailed_entries(award, when)
 ```
 
 # External Consulting
