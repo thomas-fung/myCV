@@ -12,7 +12,7 @@ headcolor: 414141
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 params:
-  full_cv: FALSE
+  full_cv: TRUE
   presentation_cutoff: 2018
 editor_options: 
   chunk_output_type: console
@@ -53,11 +53,12 @@ tribble(
 ```{r, service, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
-  "11/2022", NA, "Deputy Course Director for BSc", NA, 
-  "03/2022", NA, "Vice-President", "SSA", 
-  "01/2022", NA, "Teaching Lead in Statistics", NA, 
+  "10/2023", NA, "Summer School Officer", "The International Association for Statistical Computing (IASC)", 
+  "11/2022", NA, "Deputy Course Director for BSc", "Faculty of Science & Engineering, Macquarie University", 
+  "03/2022", "03/2023", "Vice-President", "SSA", 
+  "01/2022", "12/2023", "Teaching Lead in Statistics", NA, 
   "03/2020", "03/2022", "President", "SSA", 
-  "12/2019", NA, "Board of Directors Ordinary Members", "The Asian Regional Section of The International Association for Statistical Computing (IASC-ARS)",
+  "12/2019", "12/2023", "Board of Directors Ordinary Members", "The Asian Regional Section of The International Association for Statistical Computing (IASC-ARS)",
   "05/2019", "12/2021", "Teaching Lead in Statistics", "MQ2",
   "03/2019", "03/2020", "Vice-President", "SSA",
   "03/2019", NA, "Associate Editor", "Australian and New Zealand Journal of Statistics",
@@ -105,10 +106,6 @@ tribble(
 pub <- scholar::get_publications("eworc5YAAAAJ") %>% 
   filter(!is.na(year), journal != "arXiv preprint arXiv:",
          journal != "World Statistics Congress of the International Statistical Institute", !stringr::str_detect(title, "Package")) %>% 
-  add_row(title = "Takeaway alcohol sales and violent crime: the implications of extended trading hours
-", author = "JJJ Wang, T Fung, S Pynton", 
-journal = "Crime and Justice Bulletin", number = "No. 247",
-cites = 2, year = 2022, cid = NA, pubid = NA) %>% 
   mutate(author = stringr::str_replace(author, "AA BOMBACI BILGIN", "A Bilgin"), 
     journal = str_replace(journal, "&", "and"), 
     journal = glue::glue("{author}. {journal}, {number}")) %>% 
@@ -139,10 +136,15 @@ pub %>%
     ) 
 ```
 
-## Software development
+## Software Development
 ```{r rpkgs}
 tribble(
-  ~ pkg, ~ when, ~role, ~details, ~author, 
+  ~ pkg, ~ when, ~role, ~details, ~author,
+  "mq-letter-quarto", 2024, "Author", "Quarto template for Macquarie University Style letter", "T Fung", 
+  "moostr", 2023, "Author", "Enhancing Exam Creation in Moodle with Customisable Rewards, Shuffling, and Tolerance Levels", "I Jiang, T Fung",
+  "mq-thesis-quarto", 2023, "Author", "Macquarie University Thesis Quarto Template", "T Fung", 
+  "mq-research-report-quarto", 2023, "Author", "Quarto template for Macquarie University consulting report", "T Fung",
+  "mq-SoMAPS-research-report-latex", 2023, "Author", "LaTeX class file for a research report with the SoMAPS @ Macquarie University Branding", "T Fung", 
   "quarto-mq-revealjs-theme", 2022, "Author", "Macquarie University Quarto reveal.js Presentation Template", "T Fung, S Connor", 
   "mpcmp", 2020, "Author", "Mean-parametrized Conway-Maxwell Poisson Regression", "T Fung, A. Alwan, J. Wishart, A. Huang",
   "survivalMPLdc", 2020, "Author", "Penalised Likelihood for Survival Analysis with Dependent Censoring", 
@@ -155,6 +157,19 @@ tribble(
   arrange(-when, author) %>% 
   detailed_entries(glue("\\textbf{<pkg>}: <details>", .open = "<", .close = ">"), when, where = author, .protect = FALSE)
 ```
+
+# Honours and Awards
+```{r honours}
+tribble(
+  ~ award, ~ when,  
+  "FSE Excellent Award for Educational Leader", 2023,
+  "FSE Excellence Award for Inter-School Collaboration", 2023,
+  "60 Australian statisticians, showcasing the breadth of the Australian statistical community to celebrate the 60th anniversary of the Statistical Society of Australia", 2023,
+  "Statistical Society of Australia President’s Award for Leadership in Statistics", 2022) %>% 
+  arrange(-when) %>% 
+  detailed_entries(award, when)
+```
+
 
 ```{asis, echo=params$full_cv}
 #  Teaching experience
@@ -202,7 +217,11 @@ tribble(
 ```{r presentation, include= params$full_cv, results = "asis"}
 glue::glue("# Other presentations since  {params$presentation_cutoff}")
 tribble(
-  ~ years, ~ days, ~ conf, ~ location, 
+  ~ years, ~ days, ~ conf, ~ location,
+ 2023, "December 11-14", "ASC 2023", "Wollongong, Australia",
+  2023, "August 1-3", "EcoSta", "Tokyo, Japan", 
+  2023, "July 15-20", "64rd World Statistical Congress", 
+ "Ottawa, Canda",
  2022, "December 12-13", "IASC-ARS Interim Conference 2022", "Online Conference",
  2022, "Februry 21-24", "IASC-ARS 2022", "Online Conference",
   2021, "July 5--9", "ANZSC 2021", "Online Conference",
@@ -255,9 +274,9 @@ tribble(
 glue("# Conference organisation")
 tribble(
   ~ years, ~ days, ~ conf, ~location, ~ details, ~committee, 
-  2023, "December", "Australian Statistical Conference", "Sydney", "Secretary of the Local Organising Committee", TRUE, 
-  2023, "December", "IASC-ARS Conference", "Sydney",  "Chair of the Local Organising Committee and a member of the Scientific Program Committee", TRUE, 
-  2022, "Februry", "IASC-ARS 2022", "Kyoto", "Scientific Program Committee", TRUE, 
+  2023, "December", "Australian Statistical Conference", "Wollogong, Australia", "Secretary of the Local Organising Committee", TRUE, 
+  2023, "December", "IASC-ARS Conference at Macquarie University", "Sydney, Australia",  "Chair of the Organising Committee", TRUE, 
+  2022, "Februry", "IASC-ARS 2022", "Kyoto, Japan", "Scientific Program Committee", TRUE, 
   2019, "December", "IASC-ARS 2019", "Hong Kong", "Recent Advances in Modelling Complex Data", FALSE, 
   2018, "June", "EcoSta", "Hong Kong", "Recent advance in (semi)parametric modelling", FALSE, 
   2017, "December", "AustMS", "Sydney", "Stochastic models and applications", FALSE
@@ -273,19 +292,20 @@ tribble(
 ```{r int_research_fund, results = 'asis', include= params$full_cv}
 glue("# Internal Research Funding")
 tribble(
-  ~ start, ~end, ~amount, ~details, 
-  "07/2018", "12/2018", "6850", "Macquarie University OSP Travel Grant",
-  "08/2014", "01/2015", "6850", "Macquarie University OSP Travel Grant",
-  "01/2012", "12/2012", "19194", "Macquarie University New Staff Research Grants Scheme"
+  ~ start, ~end, ~amount,  ~scheme, ~details, 
+  "04/2024", "04/2027", "450000", "Cochlear Macquarie University Joint Fund", "Rapid, cheap, and informative hearing screening for all, with B. Liquet, G. Sofronov, S. Boothalingam & Z. Smith", 
+  "07/2018", "12/2018", "6850", "Macquarie University OSP Travel Grant", "", 
+  "08/2014", "01/2015", "6850", "Macquarie University OSP Travel Grant", "",
+  "01/2012", "12/2012", "19194", "Macquarie University New Staff Research Grants Scheme", ""
 ) %>% mutate(end = replace_na(end, "present")) %>%
   mutate(years = paste(start, "--", end, sep = ""),
          amount = 
            paste0("$", prettyNum(amount, 
                                   big.mark = ",",
                                   scientific = FALSE)),
-         details = paste0(details, ". ", amount)) %>%
-  select(years, details) %>%
-  detailed_entries(details, years)
+         scheme = paste0(scheme, ". ", amount)) %>%
+  select(years, scheme, details) %>%
+  detailed_entries(scheme, years, where = details)
 ```
 
 ```{asis, echo=params$full_cv}
@@ -295,6 +315,9 @@ tribble(
 ```{r, results = "asis", include = params$full_cv}
 tribble(
   ~ start, ~end, ~amount, ~scheme, ~ details,
+  "02/2024", NA, "4402", "FSE Teaching Development Grant", "Empowering First-Year Students: A Three-Pillar Approach to Fostering Statistical Literacy, with J. Lin",
+  "02/2024", NA, "2000", "FSE Teaching Development Grant", 
+  "You to the Power of Visualization – a data visualization challenge to enhance sustainability, employability, and student experience, with I. Jiang",
   "09/2022", "12/2022", "5000", "FSE Teaching Development Grant", "DataFest@Macquarie, with I. Jiang",
   "01/2017", "12/2017", "30451", "Macquarie University's Strategic Infrastructure Scheme (MQSIS) for Learning and Teaching",
   "Cloud-based virtual laboratory for large 
@@ -308,15 +331,6 @@ statistics units, with J. Wishart"
          scheme = paste0(scheme, ". ", amount)) %>%
   select(years, scheme, details) %>%
   detailed_entries(scheme, years, where = details)
-```
-# Prizes and Honours
-```{r honours}
-tribble(
-  ~ award, ~ when,  
-  "60 Australian statisticians, showcasing the breadth of the Australian statistical community to celebrate the 60th anniversary of the Statistical Society of Australia", 2023,
-  "Statistical Society of Australia President’s Award for Leadership in Statistics", 2022) %>% 
-  arrange(-when) %>% 
-  detailed_entries(award, when)
 ```
 
 # External Consulting
@@ -447,7 +461,7 @@ tribble(
 ```{asis, echo = params$full_cv, include = params$full_cv}
 # Refereeing
 
-Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Communication in Statistics - Theory and Methods, Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Computational and Graphical Statistics, Journal of Multivariate Analysis, Journal of Applied Mathematics, Journal of Statistical Computation and Simulation, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
+Annals of the Institute of Statistical Mathematics, Australian and New Zealand Journal of Statistics, Biometric, Communication in Statistics - Theory and Methods,  Computational Statistics, Econometrics and Statistics, Empirical Economics, Entropy, International Journal of Theoretical and Applied Finance, International Statistical Review, Journal of Applied Mathematics, Journal of Computational and Graphical Statistics, Journal of Multivariate Analysis, Journal of Statistical Computation and Simulation, Journal of Statistical Theory and Practice, Mathematics, PLOS ONE, Songklanakarin Journal of Science and Technology, Statistics and Probability Letters.
 ```
 
 
