@@ -33,7 +33,7 @@ library(vitae)
 ```{r, employment, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
-  "01/2022", NA, "Seniro Lecturer in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
+  "01/2022", NA, "Senior Lecturer in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
   "08/2018", "12/2021", "Senior Lecturer in Statistics", "Department of Mathematics and Statistics, Macquarie University",
   "01/2018", "08/2018", "Senior Lecturer in Statistics", "Department of Statistics, Macquarie University",
   "02/2010", "12/2017", 
