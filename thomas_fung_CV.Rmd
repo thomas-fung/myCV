@@ -6,14 +6,14 @@ address: School of Mathematical and Physical Sciences, Macquarie University
 phone: +61 2 9850 4769
 www: researchers.mq.edu.au/en/persons/thomas-fung
 email: thomas.fung@mq.edu.au
-twitter: thomasfungdr
+linkedin: thomas-fung-dr
 github: thomas-fung
 headcolor: 414141
 date: "`r format(Sys.time(), '%B %Y')`"
 output: vitae::hyndman
 params:
   full_cv: TRUE
-  presentation_cutoff: 2018
+  presentation_cutoff: 2019
 editor_options: 
   chunk_output_type: console
 ---
@@ -39,8 +39,8 @@ tribble(
   "02/2010", "12/2017", 
   "Lecturer in Statistics", "Department of Statistics, 
   Macquarie University",
-  "01/2010", "02/2010", "Research Assistant (Supervisor: Professor Neville Weber)", "School of Mathematics and Statistics, University of Sydney",
-  "07/2005", "02/2010", "Tutor", "School of Mathematics and Statistics, University of Sydney") %>% 
+  "01/2010", "02/2010", "Research Assistant (Supervisor: Professor Neville Weber)", "School of Mathematics and Statistics, the University of Sydney",
+  "07/2005", "02/2010", "Tutor", "School of Mathematics and Statistics, the University of Sydney") %>% 
   mutate(End = replace_na(End, "present")) %>%
   mutate(Years = paste(Start, "--", End, sep = "")) %>%
   select(Years, Position, uni) %>%
@@ -53,6 +53,7 @@ tribble(
 ```{r, service, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
+  "07/2024", NA, "Director of Education", NA,
   "10/2023", NA, "Summer School Officer", "The International Association for Statistical Computing (IASC)", 
   "11/2022", NA, "Deputy Course Director for BSc", "Faculty of Science & Engineering, Macquarie University", 
   "03/2022", "03/2023", "Vice-President", "SSA", 
@@ -190,11 +191,12 @@ tribble(
   "Unit Convenor", "Research Frontiers in Statistics (STAT7900, formerly as STAT700)", 
   "Unit Convenor", "Stochastic Finance (STAT890, rested)", 
   "Unit Convenor", "Computer Simulation (STAT2178, formerly as STAT278)",
+  "Lecturer", "Research Data Analysis (MEDI7002)",
   "Lecturer", "Statistical Theory (STAT810)", 
   "Unit Convenor", "Statistical Design (STAT6114, formerly as STAT814)",
   "Unit Convenor", "Statistical Modelling in Finance and Insurance (ACST602)", 
   "Lecturer", "Prelude to Bioinformatics (STAT8830, formerly as STAT830)", 
-  "Lectuerer", "Computer Applications in Business (MIST800)",
+  "Lecturer", "Computer Applications in Business (MIST800)",
   "Lecturer", "Gambling, Sport and Medicine (STAT175)",
   "Unit Convenor", "Graphics, Multivariate Methods and Data Mining (STAT3102, formerly as STAT302)"
   ) %>% 
@@ -218,9 +220,14 @@ tribble(
 glue::glue("# Other presentations since  {params$presentation_cutoff}")
 tribble(
   ~ years, ~ days, ~ conf, ~ location,
- 2023, "December 11-14", "ASC 2023", "Wollongong, Australia",
+  2024, "August 27-30", "COMPSTAT 2024", "Giessen, Germany",
+  2024, "June 25-26", "EAC-ISBA CONFERENCE 2024", "Online Conference", 
+  2024, "June 20", "BDSI Interactive Forum Series", "Biological Data Science Institute, ANU", 
+  2024, "June 20", "Statistic seminar", "Research School of Finance, 
+Actuarial Studies and Statistics, ANU",
+  2023, "December 11-14", "ASC 2023", "Wollongong, Australia",
   2023, "August 1-3", "EcoSta", "Tokyo, Japan", 
-  2023, "July 15-20", "64rd World Statistical Congress", 
+  2023, "July 15-20", "64th World Statistical Congress", 
  "Ottawa, Canda",
  2022, "December 12-13", "IASC-ARS Interim Conference 2022", "Online Conference",
  2022, "Februry 21-24", "IASC-ARS 2022", "Online Conference",
@@ -264,7 +271,7 @@ tribble(
  2010, "December 6--10", "ASC", "Fremantle, Australia",
  2010, "March 5", "Statistics Seminar", "School of Mathematics and Statistics, USYD, Australia",
  2008, "June 30--July 3", "ASC", "Melbourne, Australia",
- 2008, "May 16", "Statistics Seminar", "School of Mathematics and Statistics, University of Sydney, Australia",
+ 2008, "May 16", "Statistics Seminar", "School of Mathematics and Statistics, the University of Sydney, Australia",
  2007, "April 13--14", "Young Statisticians Conference", "Canberra, Australia"
 ) %>% filter(years >= params$presentation_cutoff) %>% 
   detailed_entries(what = conf, when = glue::glue("<years>, <days>", .open = "<", .close = ">"), where = location, .protect = FALSE)
@@ -293,7 +300,7 @@ tribble(
 glue("# Internal Research Funding")
 tribble(
   ~ start, ~end, ~amount,  ~scheme, ~details, 
-  "04/2024", "04/2027", "450000", "Cochlear Macquarie University Joint Fund", "Rapid, cheap, and informative hearing screening for all, with B. Liquet, G. Sofronov, S. Boothalingam & Z. Smith", 
+  "04/2024", "04/2027", "450393", "Cochlear Macquarie University Joint Fund", "Rapid, cheap, and informative hearing screening for all, with B. Liquet, G. Sofronov, S. Boothalingam & Z. Smith", 
   "07/2018", "12/2018", "6850", "Macquarie University OSP Travel Grant", "", 
   "08/2014", "01/2015", "6850", "Macquarie University OSP Travel Grant", "",
   "01/2012", "12/2012", "19194", "Macquarie University New Staff Research Grants Scheme", ""
@@ -360,7 +367,7 @@ tribble(
  "09/2018", "Department of Statistics & Actuarial Science, University of Hong Kong, Hong Kong, China", "9 weeks",
  "08/2018", "School of Physical & Mathematical Sciences, (NTU), Singapore", "3 weeks",
  "07/2018", "Quality Systems and Reporting, Climate and Atmospheric Science Branch, Office of Environment and Heritage (NSW), Sydney, Australia", "4 weeks",
- "11/2014", "School of Mathematics and Statistics, University of Sydney, Australia", "10 weeks",
+ "11/2014", "School of Mathematics and Statistics, the University of Sydney, Australia", "10 weeks",
  "09/2014", "Department of Finance, University of Maryland, USA", "9 weeks",
  "08/2014", "Department of Statistics, University of Auckland, New Zealand", "5 weeks"
 ) %>% 
@@ -453,8 +460,8 @@ supervision_data %>% filter(type == "master") %>%
 ```{r degrees, results='asis'}
 tribble(
   ~ degree, ~ loc, ~ dates, ~ details,
-  "Ph.D. in Statistics", "School of Mathematics and Statistics, University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
-  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
+  "Ph.D. in Statistics", "School of Mathematics and Statistics, the University of Sydney", "2010", "Supervisor: Emeritus Professor Eugene Seneta",
+  "B.Sc.(Advanced Mathematics) Honours Class I","School of Mathematics and Statistics, the University of Sydney", "2006", "Supervisor: Emeritus Professor Eugene Seneta") %>% 
   detailed_entries(degree, dates, where = loc, why = details)
 ```
 
