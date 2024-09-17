@@ -221,7 +221,7 @@ glue::glue("# Other presentations since  {params$presentation_cutoff}")
 tribble(
   ~ years, ~ days, ~ conf, ~ location,
   2024, "August 27-30", "COMPSTAT 2024", "Giessen, Germany",
-  2024, "June 25-26", "EAC-ISBA CONFERENCE 2024", "Online Conference", 
+  2024, "June 25-26", "EAC-ISBA Conference 2024", "Online", 
   2024, "June 20", "BDSI Interactive Forum Series", "Biological Data Science Institute, ANU", 
   2024, "June 20", "Statistic seminar", "Research School of Finance, 
 Actuarial Studies and Statistics, ANU",
@@ -324,7 +324,7 @@ tribble(
   ~ start, ~end, ~amount, ~scheme, ~ details,
   "02/2024", NA, "4402", "FSE Teaching Development Grant", "Empowering First-Year Students: A Three-Pillar Approach to Fostering Statistical Literacy, with J. Lin",
   "02/2024", NA, "2000", "FSE Teaching Development Grant", 
-  "You to the Power of Visualization – a data visualization challenge to enhance sustainability, employability, and student experience, with I. Jiang",
+  "You to the Power of Visualization – a data visualisation challenge to enhance sustainability, employability, and student experience, with I. Jiang",
   "09/2022", "12/2022", "5000", "FSE Teaching Development Grant", "DataFest@Macquarie, with I. Jiang",
   "01/2017", "12/2017", "30451", "Macquarie University's Strategic Infrastructure Scheme (MQSIS) for Learning and Teaching",
   "Cloud-based virtual laboratory for large 
