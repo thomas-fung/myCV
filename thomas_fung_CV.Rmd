@@ -1,7 +1,7 @@
 ---
 name: Thomas
 surname: Fung
-position: Senior Lecturer in Statistics
+position: Associate Professor in Statistics
 address: School of Mathematical and Physical Sciences, Macquarie University
 phone: +61 2 9850 4769
 www: researchers.mq.edu.au/en/persons/thomas-fung
@@ -33,7 +33,8 @@ library(vitae)
 ```{r, employment, results = 'asis'}
 tribble(
   ~Start, ~End, ~Position, ~ uni, 
-  "01/2022", NA, "Senior Lecturer in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
+  "01/2025", NA, "Associate Professor in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
+  "01/2022", "12/2024", "Senior Lecturer in Statistics", "School of Mathematical and Physical Sciences, Macquarie University",
   "08/2018", "12/2021", "Senior Lecturer in Statistics", "Department of Mathematics and Statistics, Macquarie University",
   "01/2018", "08/2018", "Senior Lecturer in Statistics", "Department of Statistics, Macquarie University",
   "02/2010", "12/2017", 
@@ -163,6 +164,8 @@ tribble(
 ```{r honours}
 tribble(
   ~ award, ~ when,  
+  "FSE Excellent Awards for Teaching Innovation", 2024,
+  "Vice-Chancellor's Excellence Awards for Excellence in Education. Learning and Teaching Innovation Award. Highly Commended (Team)", 2024,
   "FSE Excellent Award for Educational Leader", 2023,
   "FSE Excellence Award for Inter-School Collaboration", 2023,
   "60 Australian statisticians, showcasing the breadth of the Australian statistical community to celebrate the 60th anniversary of the Statistical Society of Australia", 2023,
